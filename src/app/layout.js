@@ -20,9 +20,19 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        {/* Хадгалсан theme нь "light" бол хуудас зурагдахаас өмнө light болгоно */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try { if (localStorage.getItem("theme") === "light") document.documentElement.classList.remove("dark"); } catch (e) {}`,
+          }}
+        />
+        <script src="/app.js" defer></script>
+      </head>
+      <body className="m-0 min-h-screen bg-zinc-950 font-sans text-base text-stone-200">{children}</body>
     </html>
   );
 }
